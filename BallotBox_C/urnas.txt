@@ -1,0 +1,4 @@
+1;UFERSA - Universidade Federal Rural do Semi-árido
+2;UERN - Universidade Estadual do Rio Grande do Norte
+3;IFRN - Instituto Federal do Rio Grande do Norte
+4;UnP - Universidade Potiguar
