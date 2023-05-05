@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "urnas.c"
+#include "candidato.c"
 #define MAX_CANDIDATOS 5
 
 int main (void) {
