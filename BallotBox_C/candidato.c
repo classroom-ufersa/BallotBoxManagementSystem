@@ -82,7 +82,7 @@ void listar_candidatos(Candidato *lista) {
     }
 }
 /*Função para buscar candidato*/
-Candidato *buscar(Candidato *lista, int numero) {
+Candidato *buscar_candidato(Candidato *lista, int numero) {
     Candidato *p;
     for (p = lista; p != NULL; p = p->prox) {
         if (p->numero == numero) {
@@ -93,35 +93,16 @@ Candidato *buscar(Candidato *lista, int numero) {
 }
 
 /*Função para editar candidato*/
-void editar_candidato(Candidato *candidato){
-    int numero;
-    
-    printf("Número do candidato a ser editado: ");
-    scanf("%d", &numero);
-    
-    for (int i = 0; i < urna->num_candidatos; i++) {
-        if (urna->candidatos[i].numero == numero) {
-            Candidato *candidato = &urna->candidatos[i];
-            
-            printf("Novo nome (%s): ", candidato->nome);
-            scanf("%s", candidato->nome);
-            
-            printf("Nova idade (%d): ", candidato->idade);
-            scanf("%d", &candidato->idade);
-            
-            printf("Novo partido (%s): ", candidato->partido);
-            scanf("%s", candidato->partido);
-            
-            printf("Novo vice (%s): ", candidato->vice);
-            scanf("%s", candidato->vice);
-            
-            printf("Novo estado (%s): ", candidato->estado);
-            scanf("%s", candidato->estado);
-            
-            printf("Candidato editado.\n");
-            return;
-        }
+void editar_candidato(Candidato *lista, int numero, char *nome, int idade, char *partido, char *vice, char *estado) {
+    Candidato *p = buscar(lista, numero);
+    if (p != NULL) {
+        strcpy(p->nome, nome);
+        p->idade = idade;
+        strcpy(p->partido, partido);
+        strcpy(p->vice, vice);
+        strcpy(p->estado, estado);
+    } else{
+        prinft("Candidato não encontrado!\n");
     }
-    
-    printf("Candidato não encontrado.\n");
+    return lista;
 }

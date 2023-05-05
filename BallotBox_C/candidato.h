@@ -6,10 +6,10 @@ typedef struct candidato Candidato;
 
 /* Funcoes exportadas */
 
-Candidato *adicionar_candidato(char *nome, int idade, int numero, char *partido, char *vice, char *estado);
-void remover_candidato(Candidato *candidato);
-void listar_candidatos(Candidato *candidato);
-void buscar_candidato(Candidato *candidato);
-void editar_candidato(Candidato *candidato);
+Candidato *adicionar_candidato(Candidato *lista, char *nome, int idade, int numero, char *partido, char *vice, char *estado);
+Candidato *remover_candidato(Candidato *lista, int numero);
+void listar_candidatos(Candidato *lista);
+Candidato *buscar_candidato(Candidato *lista, int numero);
+void editar_candidato(Candidato *lista, int numero, char *nome, int idade, char *partido, char *vice, char *estado);
 
 #endif
