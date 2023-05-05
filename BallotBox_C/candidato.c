@@ -69,18 +69,18 @@ void remover_candidato(Candidato *candidato){
 }
 
 /*Função para listar os candidatos cadastrados*/
-void listar_candidatos(Candidato *candidato){
-    for (int i = 0; i < urna->num_candidatos; i++) {
-        Candidato c = urna->candidatos[i];
-        
-        printf("%d - %s (%s)\n", c.numero, c.nome, c.partido);
-        printf("Idade: %d\n", c.idade);
-        printf("Vice: %s\n", c.vice);
-        printf("Estado: %s\n", c.estado);
+void listar_candidatos(Candidato *lista) {
+    Candidato *p;
+    for (p = lista; p != NULL; p = p->prox) {
+        printf("Nome: %s\n", p->nome);
+        printf("Idade: %d\n", p->idade);
+        printf("Numero: %d\n", p->numero);
+        printf("Partido: %s\n", p->partido);
+        printf("Vice: %s\n", p->vice);
+        printf("Estado: %s\n", p->estado);
         printf("\n");
     }
 }
-
 /*Função para buscar candidato*/
 void buscar_candidato(Candidato *candidato){
     int numero;
