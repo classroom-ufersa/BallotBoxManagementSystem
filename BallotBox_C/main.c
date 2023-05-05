@@ -25,11 +25,12 @@ int main (void) {
         switch (escolha) {
             case 1:
                 if(n_candidatos < MAX_CANDIDATOS-1){
+                    Candidato *lista = NULL;
                     printf("Digite o seu nome: ");
                     scanf("%[^\n]s", nome);
                     printf("Informe a sua idade: ");
                     scanf("%d", &idade);
-                    prinft("Digite o seu numero: ");
+                    printf("Digite o seu numero: ");
                     scanf("%d", &numero);
                     printf("Informe o seu partido: ");
                     scanf("%[^\n]s", partido);
@@ -38,8 +39,8 @@ int main (void) {
                     printf("Informe o seu estado: ");
                     scanf("%[^\n]s", estado);
 
-                    Candidato *adiciona_candidato = adicionar_candidato(nome, idade, numero, partido, vice, estado);
-                    candidato[n_candidatos++] = adiciona_candidato;
+                    lista = adicionar_candidato(lista, nome, idade, numero, partido, vice, estado);
+
 
                 } else {
                     printf("NUMERO MAXIMO DE CANDIDATOS ATINGIDO!\n");
