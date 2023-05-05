@@ -82,26 +82,14 @@ void listar_candidatos(Candidato *lista) {
     }
 }
 /*Função para buscar candidato*/
-void buscar_candidato(Candidato *candidato){
-    int numero;
-    
-    printf("Numero do candidato a ser buscado: ");
-    scanf("%d", &numero);
-    
-    for (int i = 0; i < urna->num_candidatos; i++) {
-        if (urna->candidatos[i].numero == numero) {
-            Candidato c = urna->candidatos[i];
-            
-            printf("%d - %s (%s)\n", c.numero, c.nome, c.partido);
-            printf("Idade: %d\n", c.idade);
-            printf("Vice: %s\n", c.vice);
-            printf("Estado: %s\n", c.estado);
-            
-            return;
+Candidato *buscar(Candidato *lista, int numero) {
+    Candidato *p;
+    for (p = lista; p != NULL; p = p->prox) {
+        if (p->numero == numero) {
+            return p;
         }
     }
-    
-    printf("Candidato não encontrado.\n");
+    return NULL;
 }
 
 /*Função para editar candidato*/
