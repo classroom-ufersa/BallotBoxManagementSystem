@@ -45,27 +45,27 @@ Candidato *adicionar_candidato(Candidato *lista, char *nome, int idade, int nume
 }
 
 /*Função para remover candidato*/
-void remover_candidato(Candidato *candidato){
-    int numero;
+Candidato *remover_candidato(Candidato *lista, int numero) {
+    Candidato *ant = NULL;
+    Candidato *p = lista;
     
-    printf("Numero do candidato a ser removido: ");
-    scanf("%d", &numero);
-    
-    for (int i = 0; i < urna->num_candidatos; i++) {
-        if (urna->candidatos[i].numero == numero) {
-            for (int j = i; j < urna->num_candidatos - 1; j++) {
-                urna->candidatos[j] = urna->candidatos[j + 1];
-                urna->votos[j] = urna->votos[j + 1];
-            }
-            
-            urna->num_candidatos--;
-            
-            printf("Candidato removido com sucesso.\n");
-            return;
-        }
+    while (p != NULL && p->numero != numero) {
+        ant = p;
+        p = p->prox;
     }
     
-    printf("Candidato não encontrado.\n");
+    if (p == NULL) {
+        return lista;
+    }
+    
+    if (ant == NULL) {
+        lista = p->prox;
+    } else {
+        ant->prox = p->prox;
+    }
+    
+    free(p);
+    return lista;
 }
 
 /*Função para listar os candidatos cadastrados*/
