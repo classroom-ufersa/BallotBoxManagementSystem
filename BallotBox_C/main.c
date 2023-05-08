@@ -7,8 +7,9 @@
 
 int main (void) {
     Candidato *candidato[MAX_CANDIDATOS]; 
+    Candidato *lista = NULL;
     char nome[50], partido[50], vice[50], estado[2];
-    int idade, numero, n_candidatos;
+    int idade, numero, n_candidatos = 0;
     
     printf("Bem-vindo ao Sistema de Gerenciamento de Urnas!\n");
     int i, escolha = 0;
@@ -20,24 +21,24 @@ int main (void) {
         printf("5. Editar candidato\n");
         printf("6. Consultar localização de urna\n");
         printf("7. Sair\n");
+        printf("Digite a opcao desejada: ");
         scanf("%d", &escolha);
         
         switch (escolha) {
             case 1:
                 if(n_candidatos < MAX_CANDIDATOS-1){
-                    Candidato *lista = NULL;
                     printf("Digite o seu nome: ");
-                    scanf("%[^\n]s", nome);
+                    scanf(" %[^\n]s", nome);
                     printf("Informe a sua idade: ");
                     scanf("%d", &idade);
                     printf("Digite o seu numero: ");
                     scanf("%d", &numero);
                     printf("Informe o seu partido: ");
-                    scanf("%[^\n]s", partido);
+                    scanf(" %[^\n]s", partido);
                     printf("Digite o nome do seu vice: ");
-                    scanf("%[^\n]s", vice);
+                    scanf(" %[^\n]s", vice);
                     printf("Informe o seu estado: ");
-                    scanf("%[^\n]s", estado);
+                    scanf(" %[^\n]s", estado);
 
                     lista = adicionar_candidato(lista, nome, idade, numero, partido, vice, estado);
 
@@ -49,6 +50,7 @@ int main (void) {
             case 2:
                 break;
             case 3:
+                listar_candidatos(lista);
                 break;
             case 4:
                 break;
