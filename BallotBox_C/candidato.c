@@ -93,14 +93,14 @@ Candidato *buscar_candidato(Candidato *lista, int numero) {
             printf("Vice: %s\n", p->vice);
             printf("Estado: %s\n", p->estado);
             printf("\n");
+            return p;
         }
     }
     return NULL;
 }
 
 /*Função para editar candidato*/
-void editar_candidato(Candidato *lista, int numero, char *nome, int idade, char *partido, char *vice, char *estado) {
-    Candidato *p = buscar_candidato(lista, numero);
+void editar_candidato(Candidato *p, int numero, char *nome, int idade, char *partido, char *vice, char *estado) {
     if (p != NULL) {
         strcpy(p->nome, nome);
         p->idade = idade;
@@ -110,5 +110,5 @@ void editar_candidato(Candidato *lista, int numero, char *nome, int idade, char 
     } else{
         printf("Candidato não encontrado!\n");
     }
-    return lista;
+    return p;
 }

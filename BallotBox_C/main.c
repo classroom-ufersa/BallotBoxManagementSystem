@@ -19,7 +19,7 @@ int main (void) {
         printf("3. Listar candidatos cadastrados\n");
         printf("4. Buscar candidato\n");
         printf("5. Editar candidato\n");
-        printf("6. Consultar localização de urna\n");
+        printf("6. Consultar localizacao de urna\n");
         printf("7. Sair\n");
         printf("Digite a opcao desejada: ");
         scanf("%d", &escolha);
@@ -48,7 +48,7 @@ int main (void) {
                 }
                 break;
             case 2:
-                printf("Informe o numero do candidato: ");
+                printf("Informe o numero do candidato que deseja remover: ");
                 scanf("%d", &numero);
                 remover_candidato(lista, numero);
                 break;
@@ -56,11 +56,27 @@ int main (void) {
                 listar_candidatos(lista);
                 break;
             case 4:
-                printf("Informe o numero do candidato: ");
+                printf("Informe o numero do candidato que deseja buscar: ");
                 scanf("%d", &numero);
                 buscar_candidato(lista, numero);
                 break;
             case 5:
+                printf("Informe o numero do candidato que deseja editar: ");
+                scanf("%d", &numero);
+                Candidato *p = buscar_candidato(lista, numero);
+                printf("Digite o novo nome: ");
+                scanf(" %[^\n]s", nome);
+                printf("Informe a nova idade: ");
+                scanf("%d", &idade);
+                printf("Digite o novo numero: ");
+                scanf("%d", &numero);
+                printf("Informe o novo partido: ");
+                scanf(" %[^\n]s", partido);
+                printf("Digite o novo nome do seu vice: ");
+                scanf(" %[^\n]s", vice);
+                printf("Informe o seu novo estado: ");
+                scanf(" %[^\n]s", estado);
+                editar_candidato(p, numero, nome, idade, partido, vice, estado);
                 break;
             case 6:
                 break;
