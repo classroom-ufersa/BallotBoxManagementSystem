@@ -48,6 +48,9 @@ int main (void) {
                 }
                 break;
             case 2:
+                printf("Informe o numero do candidato: ");
+                scanf("%d", &numero);
+                remover_candidato(lista, numero);
                 break;
             case 3:
                 listar_candidatos(lista);
