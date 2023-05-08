@@ -56,6 +56,9 @@ int main (void) {
                 listar_candidatos(lista);
                 break;
             case 4:
+                printf("Informe o numero do candidato: ");
+                scanf("%d", &numero);
+                buscar_candidato(lista, numero);
                 break;
             case 5:
                 break;

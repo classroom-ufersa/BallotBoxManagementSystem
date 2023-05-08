@@ -86,7 +86,13 @@ Candidato *buscar_candidato(Candidato *lista, int numero) {
     Candidato *p;
     for (p = lista; p != NULL; p = p->prox) {
         if (p->numero == numero) {
-            return p;
+            printf("Nome: %s\n", p->nome);
+            printf("Idade: %d\n", p->idade);
+            printf("Numero: %d\n", p->numero);
+            printf("Partido: %s\n", p->partido);
+            printf("Vice: %s\n", p->vice);
+            printf("Estado: %s\n", p->estado);
+            printf("\n");
         }
     }
     return NULL;
