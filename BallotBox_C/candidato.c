@@ -14,10 +14,11 @@ typedef struct candidato{
     char vice[50];
     char estado[5];
     struct candidato*prox;
+    int votos;
 };
 
 /*Função para adicionar candidatos*/
-Candidato *adicionar_candidato(Candidato *lista, char *nome, int idade, int numero, char *partido, char *vice, char *estado){
+Candidato *adicionar_candidato(Candidato *lista, char *nome, int idade, int numero, char *partido, char *vice, char *estado, int votos){
     Candidato *candidato = (Candidato*) malloc(sizeof(Candidato));
     if (candidato == NULL){
         printf("Memoria insuficiente!\n");
@@ -30,8 +31,9 @@ Candidato *adicionar_candidato(Candidato *lista, char *nome, int idade, int nume
     strcpy(candidato->partido, partido);
     strcpy(candidato->vice, vice);
     strcpy(candidato->estado, estado);
-
+    candidato->votos = votos;
     candidato->prox = lista;
+    
     return candidato;
 }
 
@@ -39,8 +41,8 @@ Candidato *obter_candidato(Candidato *lista){
     FILE *arquivo_origem;
     Candidato *nova_lista = lista;
     char linha[TAM_LINHA], nome[50], partido[20], vice[50], estado[5];
-    int idade, numero;
-    arquivo_origem = fopen("../output/abc.txt", "r"); // abre o arquivo_origem para leitura
+    int idade, numero, votos;
+    arquivo_origem = fopen("../output/candidatos.txt", "r"); // abre o arquivo_origem para leitura
     if (arquivo_origem == NULL) {
         printf("Erro ao abrir o arquivo.\n");
         exit(1);
@@ -55,8 +57,8 @@ Candidato *obter_candidato(Candidato *lista){
     }
 
     while (fgets(linha, TAM_LINHA, arquivo_origem) != NULL) {
-        sscanf(linha, " %[^;];%d;%d;%[^;];%[^;];%[^;];", nome, &idade, &numero, partido, vice, estado);
-        nova_lista = adicionar_candidato(nova_lista, nome, idade, numero, partido, vice, estado);
+        sscanf(linha, " %[^;];%d;%d;%[^;];%[^;];%[^;];%d;", nome, &idade, &numero, partido, vice, estado, votos);
+        nova_lista = adicionar_candidato(nova_lista, nome, idade, numero, partido, vice, estado, votos);
     
     }
     fclose(arquivo_origem); // fecha o arquivo
@@ -66,7 +68,7 @@ Candidato *obter_candidato(Candidato *lista){
 void atualiza_arquivo(Candidato* lista) {
     Candidato* p; /* variável auxiliar para percorrer a lista */
     FILE *arquivo;
-    arquivo = fopen("../output/abc.txt", "w"); // Abre o arquivo para escrita
+    arquivo = fopen("../output/candidatos.txt", "w"); // Abre o arquivo para escrita
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo!\n");
         exit(1);
@@ -78,10 +80,11 @@ void atualiza_arquivo(Candidato* lista) {
         fprintf(arquivo, "%d;", p->numero);
         fprintf(arquivo, "%s;", p->partido);
         fprintf(arquivo, "%s;", p->vice);
-        fprintf(arquivo, "%s\n", p->estado);
+        fprintf(arquivo, "%s;", p->estado);
+        fprintf(arquivo, "%d;\n", p->votos);
     }
     fclose(arquivo); // Fecha o arquivo
-    printf("Arquivo atualizado!\n");
+    printf("Arquivo candidatos atualizado!\n");
 }   
 
 
@@ -113,12 +116,14 @@ Candidato *remover_candidato(Candidato *lista, int numero) {
 void listar_candidatos(Candidato *lista) {
     Candidato *p;
     for (p = lista; p != NULL; p = p->prox) {
+        printf("\n-------------CANDIDATO(S)-------------\n");
         printf("Nome: %s\n", p->nome);
         printf("Idade: %d\n", p->idade);
         printf("Numero: %d\n", p->numero);
         printf("Partido: %s\n", p->partido);
         printf("Vice: %s\n", p->vice);
         printf("Estado: %s\n", p->estado);
+        printf("Votos: %d\n", p->votos);
         printf("\n");
     }
 }
@@ -128,12 +133,14 @@ Candidato *buscar_candidato(Candidato *lista, int numero) {
     Candidato *p;
     for (p = lista; p != NULL; p = p->prox) {
         if (p->numero == numero) {
+            printf("\n-------------CANDIDATO(S)-------------\n");
             printf("Nome: %s\n", p->nome);
             printf("Idade: %d\n", p->idade);
             printf("Numero: %d\n", p->numero);
             printf("Partido: %s\n", p->partido);
             printf("Vice: %s\n", p->vice);
             printf("Estado: %s\n", p->estado);
+            printf("Votos: %d\n", p->votos);
             printf("\n");
             return p;
         } else{
@@ -144,7 +151,7 @@ Candidato *buscar_candidato(Candidato *lista, int numero) {
 }
 
 /*Função para editar candidato*/
-void editar_candidato(Candidato *p, int numero, char *nome, int idade, char *partido, char *vice, char *estado) {
+void editar_candidato(Candidato *p, int numero, char *nome, int idade, char *partido, char *vice, char *estado, int votos) {
     if (p != NULL) {
         strcpy(p->nome, nome);
         p->idade = idade;
