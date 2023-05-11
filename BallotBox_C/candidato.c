@@ -13,7 +13,7 @@ typedef struct candidato{
     char partido[20];
     char vice[50];
     char estado[5];
-    struct Candidato*prox;
+    struct candidato*prox;
 };
 
 /*Função para adicionar candidatos*/
