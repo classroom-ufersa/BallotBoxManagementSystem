@@ -49,6 +49,7 @@ Candidato *obter_candidato(Candidato *lista){
     fseek(arquivo_origem, 0, SEEK_END); // posiciona o cursor no final do arquivo
     if (ftell(arquivo_origem) == 0) { // verifica a posição atual do cursor
         printf("O arquivo esta vazio.\n");
+        return NULL;
     }else{
         rewind(arquivo_origem);
     }
@@ -61,6 +62,27 @@ Candidato *obter_candidato(Candidato *lista){
     fclose(arquivo_origem); // fecha o arquivo
     return nova_lista;
 }
+
+void atualiza_arquivo(Candidato* lista) {
+    Candidato* p; /* variável auxiliar para percorrer a lista */
+    FILE *arquivo;
+    arquivo = fopen("../output/abc.txt", "w"); // Abre o arquivo para escrita
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        exit(1);
+    }
+
+    for (p = lista; p != NULL; p = p->prox) {
+        fprintf(arquivo, "%s;", p->nome);
+        fprintf(arquivo, "%d;", p->idade);
+        fprintf(arquivo, "%d;", p->numero);
+        fprintf(arquivo, "%s;", p->partido);
+        fprintf(arquivo, "%s;", p->vice);
+        fprintf(arquivo, "%s\n", p->estado);
+    }
+    fclose(arquivo); // Fecha o arquivo
+    printf("Arquivo atualizado!\n");
+}   
 
 
 /*Função para remover candidato*/
