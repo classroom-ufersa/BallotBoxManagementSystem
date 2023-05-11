@@ -7,26 +7,30 @@
 #define MAX_CANDIDATOS 5
 
 typedef struct urna{
-    int codigo_verificacao;
+    int codigo_identificacao;
     char localizacao[100];
     int num_candidatos;
     Candidato *candidato[MAX_CANDIDATOS];
-    int votos[MAX_CANDIDATOS];
+    int votos;
 };
 
 /*Função para localizar uma urna*/
-void consultar_localizacao_urna(Urna *urnas, int num_urnas){
-    int codigo;
-    
-    printf("Código de verificação da urna: ");
-    scanf("%d", codigo);
-    
-    for (int i = 0; i < num_urnas; i++) {
-        if (strcmp(urnas[i].codigo_verificacao, codigo) == 0) {
-            printf("Localização: %s\n", urnas[i].localizacao);
-            return;
+Urna *localizar_urna(char *arquivo_localizacoes, int codigo_identificacao) {
+    FILE *arquivo = fopen(arquivo_localizacoes, "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de localizacoes\n");
+        return NULL;
+    }
+
+    Urna *urna = malloc(sizeof(Urna));
+    while (fscanf(arquivo, "%d %d %s %d", &urna->codigo_identificacao, &urna->num_candidatos, urna->candidato, &urna->votos) == 4) {
+        if (urna->codigo_identificacao == codigo_identificacao) {
+            fclose(arquivo);
+            return urna;
         }
     }
-    
-    printf("Urna não encontrada.\n");
+
+    fclose(arquivo);
+    free(urna);
+    return NULL;
 }

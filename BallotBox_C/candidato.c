@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "candidato.h"
+#include "auxiliar.h"
 #define MAX_CANDIDATOS 5
 
 typedef struct candidato{
@@ -27,6 +28,7 @@ Candidato *adicionar_candidato(Candidato *lista, char *nome, int idade, int nume
     candidato->idade = idade;
     candidato->numero = numero;
     strcpy(candidato->partido, partido);
+    vice[0] = toupper(vice[0]);
     strcpy(candidato->vice, vice);
     strcpy(candidato->estado, estado);
 
@@ -94,6 +96,8 @@ Candidato *buscar_candidato(Candidato *lista, int numero) {
             printf("Estado: %s\n", p->estado);
             printf("\n");
             return p;
+        } else{
+            printf("Candidato nao encontrado! Verifique o numero, e tente novamente.");
         }
     }
     return NULL;

@@ -5,6 +5,7 @@
 #include "candidato.c"
 #define MAX_CANDIDATOS 5
 
+
 int main (void) {
     Candidato *candidato[MAX_CANDIDATOS]; 
     Candidato *lista = NULL;
@@ -22,8 +23,9 @@ int main (void) {
         printf("6. Consultar localizacao de urna\n");
         printf("7. Sair\n");
         printf("Digite a opcao desejada: ");
-        scanf("%d", &escolha);
-        
+        //scanf("%d", &escolha);
+        escolha = (int)scan_de_numeros();
+
         switch (escolha) {
             case 1:
                 if(n_candidatos < MAX_CANDIDATOS-1){
@@ -79,6 +81,7 @@ int main (void) {
                 editar_candidato(p, numero, nome, idade, partido, vice, estado);
                 break;
             case 6:
+                
                 break;
             case 7:
                 printf("Obrigado por usar este programa.\n");
