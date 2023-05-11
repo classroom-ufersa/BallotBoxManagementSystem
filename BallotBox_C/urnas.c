@@ -4,13 +4,13 @@
 #include <ctype.h>
 #include "urnas.h"
 #include "candidato.h"
-#define MAX_CANDIDATOS 5
+
 
 typedef struct urna{
     int codigo_identificacao;
     char localizacao[100];
     int num_candidatos;
-    Candidato *candidato[MAX_CANDIDATOS];
+    Candidato *candidato;
     int votos;
 };
 

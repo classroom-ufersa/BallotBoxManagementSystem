@@ -1,16 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "urnas.c"
 #include "candidato.c"
-#define MAX_CANDIDATOS 5
 
 
 int main (void) {
-    Candidato *candidato[MAX_CANDIDATOS]; 
+    Candidato *candidato; 
     Candidato *lista = NULL;
-    char nome[50], partido[50], vice[50], estado[2];
-    int idade, numero, n_candidatos = 0;
+    char nome[50], partido[20], vice[50], estado[5];
+    int idade, numero;
     
     printf("Bem-vindo ao Sistema de Gerenciamento de Urnas!\n");
     int i, escolha = 0;
@@ -28,26 +24,21 @@ int main (void) {
 
         switch (escolha) {
             case 1:
-                if(n_candidatos < MAX_CANDIDATOS-1){
-                    printf("Digite o seu nome: ");
-                    scanf(" %[^\n]s", nome);
-                    printf("Informe a sua idade: ");
-                    scanf("%d", &idade);
-                    printf("Digite o seu numero: ");
-                    scanf("%d", &numero);
-                    printf("Informe o seu partido: ");
-                    scanf(" %[^\n]s", partido);
-                    printf("Digite o nome do seu vice: ");
-                    scanf(" %[^\n]s", vice);
-                    printf("Informe o seu estado: ");
-                    scanf(" %[^\n]s", estado);
+                printf("Digite o seu nome: ");
+                scanf(" %[^\n]s", nome);
+                printf("Informe a sua idade: ");
+                scanf("%d", &idade);
+                printf("Digite o seu numero: ");
+                scanf("%d", &numero);
+                printf("Informe o seu partido: ");
+                scanf(" %[^\n]s", partido);
+                printf("Digite o nome do seu vice: ");
+                scanf(" %[^\n]s", vice);
+                printf("Informe o seu estado: ");
+                scanf(" %[^\n]s", estado);
 
-                    lista = adicionar_candidato(lista, nome, idade, numero, partido, vice, estado);
-
-
-                } else {
-                    printf("NUMERO MAXIMO DE CANDIDATOS ATINGIDO!\n");
-                }
+                lista = adicionar_candidato(lista, nome, idade, numero, partido, vice, estado);
+                printf("Candidato adicionado com sucesso!\n");         
                 break;
             case 2:
                 printf("Informe o numero do candidato que deseja remover: ");

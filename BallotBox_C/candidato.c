@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include "candidato.h"
 #include "auxiliar.h"
-#define MAX_CANDIDATOS 5
+#define TAM_LINHA 200
 
 typedef struct candidato{
     char nome[50];
@@ -12,39 +12,56 @@ typedef struct candidato{
     int numero;
     char partido[20];
     char vice[50];
-    char estado[2];
+    char estado[5];
     struct Candidato*prox;
 };
 
 /*Função para adicionar candidatos*/
 Candidato *adicionar_candidato(Candidato *lista, char *nome, int idade, int numero, char *partido, char *vice, char *estado){
-    Candidato *candidato = (Candidato*)malloc(sizeof(Candidato));
+    Candidato *candidato = (Candidato*) malloc(sizeof(Candidato));
     if (candidato == NULL){
         printf("Memoria insuficiente!\n");
         exit(1);
     }
-    nome[0] = toupper(nome[0]);
+
     strcpy(candidato->nome, nome);
     candidato->idade = idade;
     candidato->numero = numero;
     strcpy(candidato->partido, partido);
-    vice[0] = toupper(vice[0]);
     strcpy(candidato->vice, vice);
     strcpy(candidato->estado, estado);
 
-    candidato->prox = NULL;
-    if(lista == NULL){
-        lista = candidato;
-    }else{
-        Candidato *aux = lista;
-        while(aux->prox != NULL){
-            aux = aux->prox;
-        }
-        aux->prox = candidato;
+    candidato->prox = lista;
+    return candidato;
+}
+
+Candidato *obter_candidato(Candidato *lista){
+    FILE *arquivo_origem;
+    Candidato *nova_lista = lista;
+    char linha[TAM_LINHA], nome[50], partido[20], vice[50], estado[5];
+    int idade, numero;
+    arquivo_origem = fopen("../output/abc.txt", "r"); // abre o arquivo_origem para leitura
+    if (arquivo_origem == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        exit(1);
     }
 
-    return lista;
+    fseek(arquivo_origem, 0, SEEK_END); // posiciona o cursor no final do arquivo
+    if (ftell(arquivo_origem) == 0) { // verifica a posição atual do cursor
+        printf("O arquivo esta vazio.\n");
+    }else{
+        rewind(arquivo_origem);
+    }
+
+    while (fgets(linha, TAM_LINHA, arquivo_origem) != NULL) {
+        sscanf(linha, " %[^;];%d;%d;%[^;];%[^;];%[^;];", nome, &idade, &numero, partido, vice, estado);
+        nova_lista = adicionar_candidato(nova_lista, nome, idade, numero, partido, vice, estado);
+    
+    }
+    fclose(arquivo_origem); // fecha o arquivo
+    return nova_lista;
 }
+
 
 /*Função para remover candidato*/
 Candidato *remover_candidato(Candidato *lista, int numero) {
@@ -83,6 +100,7 @@ void listar_candidatos(Candidato *lista) {
         printf("\n");
     }
 }
+
 /*Função para buscar candidato*/
 Candidato *buscar_candidato(Candidato *lista, int numero) {
     Candidato *p;
