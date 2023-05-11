@@ -7,9 +7,9 @@
 int main(){
     Candidato *lista = NULL;
     lista = obter_candidato(lista);
-    listar_candidatos(lista);
-    lista = adicionar_candidato(lista, "Dayvison", 25, 4321, "BDC", "Lucas", "PB");
+    lista = remover_candidato(lista, 1234);
     atualiza_arquivo(lista);
     listar_candidatos(lista);
+
     return 0;
 }

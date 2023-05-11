@@ -7,6 +7,8 @@ int main (void) {
     Candidato *lista = NULL;
     char nome[50], partido[20], vice[50], estado[5];
     int idade, numero;
+
+    lista = obter_candidato(lista);
     
     printf("Bem-vindo ao Sistema de Gerenciamento de Urnas!\n");
     int i, escolha = 0;
@@ -38,12 +40,15 @@ int main (void) {
                 scanf(" %[^\n]s", estado);
 
                 lista = adicionar_candidato(lista, nome, idade, numero, partido, vice, estado);
-                printf("Candidato adicionado com sucesso!\n");         
+                printf("Candidato adicionado com sucesso!\n"); 
+                atualiza_arquivo(lista);        
                 break;
             case 2:
                 printf("Informe o numero do candidato que deseja remover: ");
                 scanf("%d", &numero);
-                remover_candidato(lista, numero);
+                lista = remover_candidato(lista, numero);
+                printf("Candidato removido com sucesso!\n");
+                atualiza_arquivo(lista);
                 break;
             case 3:
                 listar_candidatos(lista);
@@ -57,19 +62,29 @@ int main (void) {
                 printf("Informe o numero do candidato que deseja editar: ");
                 scanf("%d", &numero);
                 Candidato *p = buscar_candidato(lista, numero);
-                printf("Digite o novo nome: ");
-                scanf(" %[^\n]s", nome);
-                printf("Informe a nova idade: ");
-                scanf("%d", &idade);
-                printf("Digite o novo numero: ");
-                scanf("%d", &numero);
-                printf("Informe o novo partido: ");
-                scanf(" %[^\n]s", partido);
-                printf("Digite o novo nome do seu vice: ");
-                scanf(" %[^\n]s", vice);
-                printf("Informe o seu novo estado: ");
-                scanf(" %[^\n]s", estado);
-                editar_candidato(p, numero, nome, idade, partido, vice, estado);
+
+                if(p != NULL){
+                    char resposta;
+                    printf("Deseja editar este candidato (s/n)? ");
+                    scanf(" %c", &resposta);
+
+                    if(resposta == 's' || resposta == 'S'){
+                        printf("Digite o novo nome: ");
+                        scanf(" %[^\n]s", nome);
+                        printf("Informe a nova idade: ");
+                        scanf("%d", &idade);
+                        printf("Digite o novo numero: ");
+                        scanf("%d", &numero);
+                        printf("Informe o novo partido: ");
+                        scanf(" %[^\n]s", partido);
+                        printf("Digite o novo nome do seu vice: ");
+                        scanf(" %[^\n]s", vice);
+                        printf("Informe o seu novo estado: ");
+                        scanf(" %[^\n]s", estado);
+                        editar_candidato(p, numero, nome, idade, partido, vice, estado);
+                        atualiza_arquivo(lista);
+                    }
+                }
                 break;
             case 6:
                 
