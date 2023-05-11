@@ -97,7 +97,7 @@ Candidato *buscar_candidato(Candidato *lista, int numero) {
             printf("\n");
             return p;
         } else{
-            printf("Candidato nao encontrado! Verifique o numero, e tente novamente.");
+            printf("Candidato nao encontrado! Verifique o numero, e tente novamente.\n");
         }
     }
     return NULL;
