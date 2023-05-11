@@ -1,25 +1,25 @@
 #include "urnas.c"
 #include "candidato.c"
 
-
 int main (void) {
     Candidato *candidato; 
     Candidato *lista = NULL;
     char nome[50], partido[20], vice[50], estado[5];
-    int idade, numero;
-
+    int idade, numero, votos;
+    Urna *urna;
+    urna = localizar_urna(urna);
     lista = obter_candidato(lista);
-    
     printf("Bem-vindo ao Sistema de Gerenciamento de Urnas!\n");
-    int i, escolha = 0;
-    while (escolha != 7) {
+    int escolha = 0;
+    while (escolha != 8) {
         printf("1. Adicionar candidato\n");
         printf("2. Remover candidato\n");
         printf("3. Listar candidatos cadastrados\n");
         printf("4. Buscar candidato\n");
         printf("5. Editar candidato\n");
         printf("6. Consultar localizacao de urna\n");
-        printf("7. Sair\n");
+        printf("7. Iniciar votacao\n");
+        printf("8. Sair\n");
         printf("Digite a opcao desejada: ");
         //scanf("%d", &escolha);
         escolha = (int)scan_de_numeros();
@@ -28,20 +28,26 @@ int main (void) {
             case 1:
                 printf("Digite o seu nome: ");
                 scanf(" %[^\n]s", nome);
+                remover_caracteres_especiais(nome);
                 printf("Informe a sua idade: ");
                 scanf("%d", &idade);
                 printf("Digite o seu numero: ");
                 scanf("%d", &numero);
                 printf("Informe o seu partido: ");
                 scanf(" %[^\n]s", partido);
+                remover_caracteres_especiais(partido);
                 printf("Digite o nome do seu vice: ");
                 scanf(" %[^\n]s", vice);
+                remover_caracteres_especiais(vice);
                 printf("Informe o seu estado: ");
                 scanf(" %[^\n]s", estado);
-
-                lista = adicionar_candidato(lista, nome, idade, numero, partido, vice, estado);
+                remover_caracteres_especiais(estado);
+                votos = 0;
+                lista = adicionar_candidato(lista, nome, idade, numero, partido, vice, estado, votos);
                 printf("Candidato adicionado com sucesso!\n"); 
-                atualiza_arquivo(lista);        
+                urna->num_candidatos++;
+                atualiza_arquivo(lista);
+                atualiza_urna(urna);        
                 break;
             case 2:
                 printf("Informe o numero do candidato que deseja remover: ");
@@ -81,15 +87,32 @@ int main (void) {
                         scanf(" %[^\n]s", vice);
                         printf("Informe o seu novo estado: ");
                         scanf(" %[^\n]s", estado);
-                        editar_candidato(p, numero, nome, idade, partido, vice, estado);
+                        editar_candidato(p, numero, nome, idade, partido, vice, estado, votos);
                         atualiza_arquivo(lista);
                     }
                 }
                 break;
             case 6:
-                
+                imprime_urna(urna);
+                listar_candidatos(lista);
                 break;
             case 7:
+                printf("Informe o numero do candidato que deseja votar: ");
+                scanf("%d", &numero);
+                Candidato *c = buscar_candidato(lista, numero);
+
+                if(c != NULL){
+                    char resposta;
+                    printf("Deseja votar neste candidato (s/n)? ");
+                    scanf(" %c", &resposta);
+                    if(resposta == 's' || resposta == 'S'){
+                        c->votos++;
+                        printf("Voto com sucesso!\n");
+                    }
+                }
+                atualiza_arquivo(lista);
+                break;
+            case 8:
                 printf("Obrigado por usar este programa.\n");
                 exit(1);
                 break;
@@ -98,4 +121,5 @@ int main (void) {
                 break;
         }
     }
+    return 0;
 }

@@ -4,7 +4,8 @@
 #include <ctype.h>
 #include "urnas.h"
 #include "candidato.h"
-
+#include "auxiliar.h"
+#define TAM_LINHA 200
 
 typedef struct urna{
     int codigo_identificacao;
@@ -12,29 +13,29 @@ typedef struct urna{
     int num_candidatos;
     Candidato *candidato;
     int votos;
+    struct urna*prox;
 };
 
-Urna *cria_urna(Urna *urna, int codigo_identificacao, char *localizacao, int num_candidatos, int votos) {
+Urna *cria_urna(Urna *urna, int codigo_identificacao, char *localizacao, int num_candidatos) {
     Urna *u = (Urna*) malloc(sizeof(Urna));
     // inserindo as informações passadas por parametro
     u->codigo_identificacao = codigo_identificacao;
     strcpy(u->localizacao, localizacao);
-    u-> num_candidatos = num_candidatos;
-    u->votos = votos;
-
+    u->num_candidatos = num_candidatos;
+    u->prox = urna;
     return u;
 }
 
 /*Função para localizar uma urna*/
-Urna *localizar_urna(Urna *urna, char *arquivo_localizacoes, int codigo_identificacao) {
-    FILE *arquivo_origem = fopen("../output/urnas.txt", "r");
+Urna *localizar_urna(Urna *urna) {
+    FILE *arquivo_origem;
     Urna *nova_urna = urna;
-    char localizacao[100];
-    int num_candidatos, votos;
-
+    char localizacao[100], linha[TAM_LINHA];
+    int codigo_identificacao, num_candidatos, votos;
+    arquivo_origem = fopen("../output/urnas.txt", "r");
     if (arquivo_origem == NULL) {
         printf("Erro ao abrir o arquivo de localizacoes\n");
-        return NULL;
+        exit(1);
     }
 
     fseek(arquivo_origem, 0, SEEK_END); // posiciona o cursor no final do arquivo
@@ -45,20 +46,35 @@ Urna *localizar_urna(Urna *urna, char *arquivo_localizacoes, int codigo_identifi
         rewind(arquivo_origem);
     }
 
-    while (fscanf(arquivo_origem, " %[^;]; %d;%d;%d;", localizacao, &urna->codigo_identificacao, &urna->num_candidatos, &urna->votos) != NULL) {
-        nova_urna = cria_urna(nova_urna, codigo_identificacao, localizacao, num_candidatos, votos);
+    while (fgets(linha, TAM_LINHA, arquivo_origem) != NULL){
+        sscanf(linha, " %[^;];%d;%d;", localizacao, &codigo_identificacao, &num_candidatos);
+        nova_urna = cria_urna(nova_urna, codigo_identificacao, localizacao, num_candidatos);
     }
 
     fclose(arquivo_origem);
-    free(urna);
     return nova_urna;
 }
 
+void atualiza_urna(Urna* urna) {
+    Urna* p; /* variável auxiliar para percorrer a lista */
+    FILE *arquivo;
+    arquivo = fopen("../output/urnas.txt", "w"); // Abre o arquivo para escrita
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        exit(1);
+    }
+
+    fprintf(arquivo, "%s;", p->localizacao);
+    fprintf(arquivo, "%d;", p->codigo_identificacao);
+    fprintf(arquivo, "%d;\n", p->num_candidatos);
+
+    fclose(arquivo); // Fecha o arquivo
+    printf("Arquivo urnas atualizado!\n");
+}
 
 void imprime_urna(Urna *urna){
     printf("\n-------------URNA-------------\n");
     printf("Localizacao: %s\n", urna->localizacao);
     printf("Codigo de identificacao: %d\n", urna->codigo_identificacao);
     printf("Numero de Candidatos: %d\n", urna->num_candidatos);
-    printf("Votos: %d\n", urna->votos);
 }

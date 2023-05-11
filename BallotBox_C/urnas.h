@@ -5,8 +5,9 @@
 typedef struct urna Urna;
 
 /* Funcoes exportadas */
-Urna *localizar_urna(Urna *urna, char *arquivo_localizacoes, int codigo_identificacao);
-Urna *cria_urna(Urna *urna, int codigo_identificacao, char *localizacao, int num_candidatos, int votos);
+Urna *localizar_urna(Urna *urna);
+Urna *cria_urna(Urna *urna, int codigo_identificacao, char *localizacao, int num_candidatos);
 void imprime_urna(Urna *urna);
+void atualiza_urna(Urna* urna);
 
 #endif

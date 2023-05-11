@@ -9,7 +9,5 @@ int main(){
     lista = obter_candidato(lista);
     lista = remover_candidato(lista, 1234);
     atualiza_arquivo(lista);
-    listar_candidatos(lista);
-
     return 0;
 }
