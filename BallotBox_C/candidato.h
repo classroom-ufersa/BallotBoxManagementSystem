@@ -5,7 +5,6 @@
 typedef struct candidato Candidato;
 
 /* Funcoes exportadas */
-
 Candidato *adicionar_candidato(Candidato *lista, char *nome, int idade, int numero, char *partido, char *vice, char *estado, int votos);
 Candidato *obter_candidato(Candidato *lista);
 void atualiza_arquivo(Candidato* lista);

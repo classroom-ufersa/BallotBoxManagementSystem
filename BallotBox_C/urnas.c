@@ -15,7 +15,7 @@ typedef struct urna{
     int votos;
     struct urna*prox;
 };
-
+//Função para criar uma urna no arquivo de texto
 Urna *cria_urna(Urna *urna, int codigo_identificacao, char *localizacao, int num_candidatos) {
     Urna *u = (Urna*) malloc(sizeof(Urna));
     // inserindo as informações passadas por parametro
@@ -32,7 +32,7 @@ Urna *localizar_urna(Urna *urna) {
     Urna *nova_urna = urna;
     char localizacao[100], linha[TAM_LINHA];
     int codigo_identificacao, num_candidatos, votos;
-    arquivo_origem = fopen("../output/urnas.txt", "r");
+    arquivo_origem = fopen("../output/urnas.txt", "r"); //Abre o arquivo de texto de urnas
     if (arquivo_origem == NULL) {
         printf("Erro ao abrir o arquivo de localizacoes\n");
         exit(1);
@@ -55,6 +55,7 @@ Urna *localizar_urna(Urna *urna) {
     return nova_urna;
 }
 
+//Função para atualizar as informações da urna
 void atualiza_urna(Urna* urna) {
     FILE *arquivo;
     arquivo = fopen("../output/urnas.txt", "w"); // Abre o arquivo para escrita
@@ -71,6 +72,7 @@ void atualiza_urna(Urna* urna) {
     printf("Arquivo urnas atualizado!\n");
 }
 
+//Função para imprimir a urna
 void imprime_urna(Urna *urna){
     printf("\n-------------URNA-------------\n");
     printf("Localizacao: %s\n", urna->localizacao);

@@ -2,13 +2,14 @@
 #include "candidato.c"
 
 int main (void) {
+    //Declaração de variáveis
     Candidato *candidato; 
     Candidato *lista = NULL;
     char nome[50], partido[20], vice[50], estado[5];
     int idade, numero, votos;
     Urna *urna;
-    urna = localizar_urna(urna);
-    lista = obter_candidato(lista);
+    urna = localizar_urna(urna); //Abrindo os arquivos de urna
+    lista = obter_candidato(lista); //Abrindo os arquivos de candidatos
     printf("Bem-vindo ao Sistema de Gerenciamento de Urnas!\n");
     int escolha = 0;
     while (escolha != 8) {
@@ -22,7 +23,7 @@ int main (void) {
         printf("8. Sair\n");
         printf("Digite a opcao desejada: ");
         //scanf("%d", &escolha);
-        escolha = (int)scan_de_numeros();
+        escolha = (int)scan_de_numeros(); //Função auxiliar para verificar se a escolha é um numero
 
         switch (escolha) {
             case 1:
