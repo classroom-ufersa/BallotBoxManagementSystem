@@ -37,12 +37,13 @@ Candidato *adicionar_candidato(Candidato *lista, char *nome, int idade, int nume
     return candidato;
 }
 
+//Função para ler o arquivo de texto de candidatos.
 Candidato *obter_candidato(Candidato *lista){
     FILE *arquivo_origem;
     Candidato *nova_lista = lista;
     char linha[TAM_LINHA], nome[50] = "É2&#*$", partido[20], vice[50], estado[5];
     int idade, numero, votos;
-    arquivo_origem = fopen("../output/candidatos.txt", "r"); // abre o arquivo_origem para leitura
+    arquivo_origem = fopen("../output/candidatos.txt", "r"); // Abre o arquivo_origem para leitura
     if (arquivo_origem == NULL) {
         printf("Erro ao abrir o arquivo.\n");
         exit(1);
@@ -55,25 +56,27 @@ Candidato *obter_candidato(Candidato *lista){
     }else{
         rewind(arquivo_origem);
     }*/
-    while (fgets(linha, TAM_LINHA, arquivo_origem) != NULL) {
+
+    while (fgets(linha, TAM_LINHA, arquivo_origem) != NULL) {//Preencher a linha no arquivo de texto
         sscanf(linha, " %[^;];%d;%d;%[^;];%[^;];%[^;];%d;\n", nome, &idade, &numero, partido, vice, estado, &votos);
         if(strcmp(nome, "É2&#*$")){
             nova_lista = adicionar_candidato(nova_lista, nome, idade, numero, partido, vice, estado, votos);
         }
     }       
-    fclose(arquivo_origem); // fecha o arquivo
+    fclose(arquivo_origem); // Fecha o arquivo
     return nova_lista;
 }
 
+//Função para atualizar o arquivo de texto dos candidatos
 void atualiza_arquivo(Candidato* lista) {
-    Candidato* p; /* variável auxiliar para percorrer a lista */
+    Candidato* p; /* Variável auxiliar para percorrer a lista */
     FILE *arquivo;
     arquivo = fopen("../output/candidatos.txt", "w"); // Abre o arquivo para escrita
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo!\n");
         exit(1);
     }
-
+    //Laço de repetição para preencher o arquivo com as novas informações
     for (p = lista; p != NULL; p = p->prox) {
         fprintf(arquivo, "%s;", p->nome);
         fprintf(arquivo, "%d;", p->idade);

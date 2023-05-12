@@ -27,7 +27,7 @@ float scan_de_numeros(void)
     return result;
 }
 
-
+//Função para remover caracteres especiais
 void remover_caracteres_especiais(char *string) {
   int i = 0, j = 0;
 
