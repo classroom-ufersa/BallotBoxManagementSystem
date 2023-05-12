@@ -38,13 +38,13 @@ Urna *localizar_urna(Urna *urna) {
         exit(1);
     }
 
-    fseek(arquivo_origem, 0, SEEK_END); // posiciona o cursor no final do arquivo
+    /*fseek(arquivo_origem, 0, SEEK_END); // posiciona o cursor no final do arquivo
     if (ftell(arquivo_origem) == 0) { // verifica a posição atual do cursor
         printf("O arquivo esta vazio.\n");
         return NULL;
     }else{
         rewind(arquivo_origem);
-    }
+    }*/
 
     while (fgets(linha, TAM_LINHA, arquivo_origem) != NULL){
         sscanf(linha, " %[^;];%d;%d;", localizacao, &codigo_identificacao, &num_candidatos);
@@ -56,7 +56,6 @@ Urna *localizar_urna(Urna *urna) {
 }
 
 void atualiza_urna(Urna* urna) {
-    Urna* p; /* variável auxiliar para percorrer a lista */
     FILE *arquivo;
     arquivo = fopen("../output/urnas.txt", "w"); // Abre o arquivo para escrita
     if (arquivo == NULL) {
@@ -64,9 +63,9 @@ void atualiza_urna(Urna* urna) {
         exit(1);
     }
 
-    fprintf(arquivo, "%s;", p->localizacao);
-    fprintf(arquivo, "%d;", p->codigo_identificacao);
-    fprintf(arquivo, "%d;\n", p->num_candidatos);
+    fprintf(arquivo, "%s;", urna->localizacao);
+    fprintf(arquivo, "%d;", urna->codigo_identificacao);
+    fprintf(arquivo, "%d;\n", urna->num_candidatos);
 
     fclose(arquivo); // Fecha o arquivo
     printf("Arquivo urnas atualizado!\n");

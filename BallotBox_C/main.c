@@ -54,7 +54,9 @@ int main (void) {
                 scanf("%d", &numero);
                 lista = remover_candidato(lista, numero);
                 printf("Candidato removido com sucesso!\n");
+                urna->num_candidatos--;
                 atualiza_arquivo(lista);
+                atualiza_urna(urna); 
                 break;
             case 3:
                 listar_candidatos(lista);

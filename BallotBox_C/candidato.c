@@ -40,7 +40,7 @@ Candidato *adicionar_candidato(Candidato *lista, char *nome, int idade, int nume
 Candidato *obter_candidato(Candidato *lista){
     FILE *arquivo_origem;
     Candidato *nova_lista = lista;
-    char linha[TAM_LINHA], nome[50], partido[20], vice[50], estado[5];
+    char linha[TAM_LINHA], nome[50] = "É2&#*$", partido[20], vice[50], estado[5];
     int idade, numero, votos;
     arquivo_origem = fopen("../output/candidatos.txt", "r"); // abre o arquivo_origem para leitura
     if (arquivo_origem == NULL) {
@@ -48,19 +48,19 @@ Candidato *obter_candidato(Candidato *lista){
         exit(1);
     }
 
-    fseek(arquivo_origem, 0, SEEK_END); // posiciona o cursor no final do arquivo
+    /*fseek(arquivo_origem, 0, SEEK_END); // posiciona o cursor no final do arquivo
     if (ftell(arquivo_origem) == 0) { // verifica a posição atual do cursor
         printf("O arquivo esta vazio.\n");
         return NULL;
     }else{
         rewind(arquivo_origem);
-    }
-
+    }*/
     while (fgets(linha, TAM_LINHA, arquivo_origem) != NULL) {
-        sscanf(linha, " %[^;];%d;%d;%[^;];%[^;];%[^;];%d;", nome, &idade, &numero, partido, vice, estado, votos);
-        nova_lista = adicionar_candidato(nova_lista, nome, idade, numero, partido, vice, estado, votos);
-    
-    }
+        sscanf(linha, " %[^;];%d;%d;%[^;];%[^;];%[^;];%d;\n", nome, &idade, &numero, partido, vice, estado, &votos);
+        if(strcmp(nome, "É2&#*$")){
+            nova_lista = adicionar_candidato(nova_lista, nome, idade, numero, partido, vice, estado, votos);
+        }
+    }       
     fclose(arquivo_origem); // fecha o arquivo
     return nova_lista;
 }
@@ -155,6 +155,7 @@ void editar_candidato(Candidato *p, int numero, char *nome, int idade, char *par
     if (p != NULL) {
         strcpy(p->nome, nome);
         p->idade = idade;
+        p->numero = numero;
         strcpy(p->partido, partido);
         strcpy(p->vice, vice);
         strcpy(p->estado, estado);
