@@ -53,9 +53,19 @@ int main (void) {
             case 2:
                 printf("Informe o numero do candidato que deseja remover: ");
                 scanf("%d", &numero);
-                lista = remover_candidato(lista, numero);
-                printf("Candidato removido com sucesso!\n");
-                urna->num_candidatos--;
+                Candidato *a = buscar_candidato(lista, numero);
+
+                if(a != NULL){
+                    char resposta;
+                    printf("Deseja REMOVER este candidato (s/n)? ");
+                    scanf(" %c", &resposta);
+
+                    if(resposta == 's' || resposta == 'S'){
+                        lista = remover_candidato(lista, numero);
+                        printf("Candidato removido com sucesso!\n");
+                        urna->num_candidatos--;
+                    }
+                }
                 atualiza_arquivo(lista);
                 atualiza_urna(urna); 
                 break;
@@ -74,7 +84,7 @@ int main (void) {
 
                 if(p != NULL){
                     char resposta;
-                    printf("Deseja editar este candidato (s/n)? ");
+                    printf("Deseja EDITAR este candidato (s/n)? ");
                     scanf(" %c", &resposta);
 
                     if(resposta == 's' || resposta == 'S'){
@@ -106,7 +116,7 @@ int main (void) {
 
                 if(c != NULL){
                     char resposta;
-                    printf("Deseja votar neste candidato (s/n)? ");
+                    printf("Deseja VOTAR neste candidato (s/n)? ");
                     scanf(" %c", &resposta);
                     if(resposta == 's' || resposta == 'S'){
                         c->votos++;
